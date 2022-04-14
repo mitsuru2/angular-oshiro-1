@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "angular-oshiro-1-4497a"
+  },
+  "targets": {
+    "angular-oshiro-1-4497a": {
+      "hosting": {
+        "angular-oshiro-1": [
+          "angular-oshiro-1-4497a"
+        ]
+      }
+    }
+  }
+}
