@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angular-oshiro-1';
+  project_name = 'angular-oshiro-1';
+  app_title = '御城プロジェクト:RE キャラクターマネージャー';
 }
