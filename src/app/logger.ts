@@ -69,7 +69,7 @@ export class Logger {
   }
 
   private static printDebug(...optionalParams: any[]): void {
-    this.printBase(console.log, '[DBG]', optionalParams);
+    this.printBase(console.debug, '[DBG]', optionalParams);
   }
   private static printInfo(...optionalParams: any[]): void {
     this.printBase(console.info, '[INF]', optionalParams);
