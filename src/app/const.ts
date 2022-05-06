@@ -5,6 +5,8 @@ export namespace Const {
     export const Project = 'angular-oshiro-1';
     export const Title = 'Angular Material 練習ウェブアプリ';
     export const Version = '1.0';
+    export const Author = 'Takahashi Mitsuru';
+    export const StartYear = 2022;
   }
 }
 export namespace DefaultStatus {

@@ -1,4 +1,6 @@
 import { ApplicationInitStatus, Component } from '@angular/core';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 import { AppProppertyService, AppSt } from './app-propperty.service';
 import { Logger } from './logger';
 
@@ -8,7 +10,18 @@ import { Logger } from './logger';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  constructor(public appProperty: AppProppertyService) {}
+  constructor(
+    public appProperty: AppProppertyService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      'woman',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '/assets/woman_black.svg'
+      )
+    );
+  }
 
   ngOnInit(): void {
     Logger.trace();

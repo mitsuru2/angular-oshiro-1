@@ -8,9 +8,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { HomeComponent } from './home/home.component';
+import { ShiromusumeListComponent } from './shiromusume-list/shiromusume-list.component';
+import { ShiromusumeNewComponent } from './shiromusume-new/shiromusume-new.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    ShiromusumeListComponent,
+    ShiromusumeNewComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -19,6 +28,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatButtonModule,
     MatToolbarModule,
     MatSidenavModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
