@@ -95,11 +95,7 @@ export class Logger {
    * @param{any[]} optionalParams These parameters are input into 'printFn'.
    * @returns{void}
    */
-  private static printBase(
-    printFn: (...optionalParams: any[]) => void,
-    prefix: string,
-    ...optionalParams: any[]
-  ): void {
+  private static printBase(printFn: (...optionalParams: any[]) => void, prefix: string, ...optionalParams: any[]): void {
     // Input top parameter only, if the list length is 1.
     if (optionalParams[0].length == 1) {
       printFn(prefix, optionalParams[0][0]);

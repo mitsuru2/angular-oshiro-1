@@ -1,1 +1,60 @@
-<app-top-menu></app-top-menu>
+<div class="main-container">
+
+  <!----------------------------------------------------------------------------
+    TOP MENU
+  ----------------------------------------------------------------------------->
+  <mat-toolbar color="primary">
+    <!-- Toggle button for side menu. -->
+    <button mat-icon-button (click)="onClickMenuButton(sidenav)">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <!-- Application title -->
+    <span>{{ appProperty.title }}</span>
+
+    <!-- Spacer -->
+    <span class="top-menu-spacer"></span>
+
+    <!-- Log-in / Log-out -->
+    <button mat-icon-button *ngIf="!appProperty.status.login" (click)="onClickLoginButton()">
+      <mat-icon>login</mat-icon>
+    </button>
+    <button mat-icon-button *ngIf="appProperty.status.login" (click)="onClickLogoutButton()">
+      <mat-icon>logout</mat-icon>
+    </button>
+
+    <!-- Setting icon. -->
+    <button mat-icon-button (click)="onClickSettingsButton()">
+      <mat-icon>settings</mat-icon>
+    </button>
+  </mat-toolbar>
+
+
+  <!----------------------------------------------------------------------------
+    SIDE MENU
+  ----------------------------------------------------------------------------->
+  <mat-sidenav-container class="example-container">
+    <mat-sidenav #sidenav mode="side" class="example-sidenav" [opened]="appProperty.status.sideMenu.opened">
+      <h3>Side Menu</h3>
+      <p><button mat-raised-button>Menu 1</button></p>
+      <p><button mat-raised-button>Menu 2</button></p>
+      <p><button mat-raised-button>Menu 3</button></p>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="main-content">
+        <p>Main contents should be inplemented here.</p>
+        <p>Another component should be used.</p>
+
+      </div>
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <!----------------------------------------------------------------------------
+    STATUS BAR
+  ----------------------------------------------------------------------------->
+  <div class="footer">
+    Footer area
+  </div>
+</div>
