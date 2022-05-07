@@ -1,44 +1,68 @@
 export const enum CharacterType {
-  ShiroMusume = 0, // 城娘
-  ShiroMusumeCollabo, // 城娘(コラボ)
-  KabutoMusume, // 兜娘
-  CollaboUnit, // コラボユニット
-  Tono, // 殿
-  JinMusume, // 神娘
-  EventItem, // イベントアイテム
+  ShiroMusume = '0', // 城娘
+  ShiroMusumeCollabo = '1', // 城娘(コラボ)
+  KabutoMusume = '2', // 兜娘
+  CollaboUnit = '3', // コラボユニット
+  Tono = '4', // 殿
+  JinMusume = '5', // 神娘
+  EventItem = '6', // イベントアイテム
 }
 
 export const enum GeographType {
-  Plain = 0, // 平
-  Hill, // 平山
-  Mountain, // 山
-  Seaside, // 水
-  Nothing, // 無
+  Plain = '0', // 平
+  Hill = '1', // 平山
+  Mountain = '2', // 山
+  Seaside = '3', // 水
+  Nothing = '4', // 無
 }
 
 export const enum WeaponType {
-  Sword = 0, // 刀
-  Spear, // 槍
-  Hammer, // 槌
-  Shield, // 盾
-  Fist, // 拳
-  Scythe, // 鎌
-  Club, // 戦棍
-  DualSword, // 双剣
-  Bow, // 弓
-  CrossBow, // 石弓
-  Gun, // 鉄砲
-  Cannon, // 大砲
-  Kabu, // 歌舞
-  Amulet, // 札
-  Bell, // 鈴
-  Wand, // 杖
-  Haraegushi, // 祓串
-  Book, // 本
-  ThrowKnife, //投剣
-  Whip, //鞭
-  TrumpetShell, // 陣貝
+  Sword = '0', // 刀
+  Spear = '1', // 槍
+  Hammer = '2', // 槌
+  Shield = '3', // 盾
+  Fist = '4', // 拳
+  Scythe = '5', // 鎌
+  Club = '6', // 戦棍
+  DualSword = '7', // 双剣
+  Bow = '8', // 弓
+  CrossBow = '9', // 石弓
+  Gun = '10', // 鉄砲
+  Cannon = '11', // 大砲
+  Kabu = '12', // 歌舞
+  Amulet = '13', // 札
+  Bell = '14', // 鈴
+  Wand = '15', // 杖
+  Haraegushi = '16', // 祓串
+  Book = '17', // 本
+  ThrowKnife = '18', //投剣
+  Whip = '19', //鞭
+  TrumpetShell = '20', // 陣貝
 }
+
+export const WeaponTypeCosts = {
+  '0': { cost: 9 },
+  '1': { cost: 5 },
+  '2': { cost: 12 },
+  '3': { cost: 11 },
+  '4': { cost: 8 },
+  '5': { cost: 9 },
+  '6': { cost: 12 },
+  '7': { cost: 11 },
+  '8': { cost: 7 },
+  '9': { cost: 9 },
+  '10': { cost: 12 },
+  '11': { cost: 14 },
+  '12': { cost: 10 },
+  '13': { cost: 10 },
+  '14': { cost: 10 },
+  '15': { cost: 11 },
+  '16': { cost: 9 },
+  '17': { cost: 10 },
+  '18': { cost: 9 },
+  '19': { cost: 8 },
+  '20': { cost: 14 },
+};
 
 export const enum FacilityType {
   Gate = 0, // 門
@@ -81,30 +105,45 @@ export const enum AbilityType {
   StrategicSkill, // 計略
 }
 
+export interface NameAndDispOrder {
+  name: string;
+  order: number;
+}
+
+export interface NameAndDispOrderDoc {
+  [id: string]: NameAndDispOrder;
+}
+
 export interface IdAndLabel {
   id: string;
   label: string;
 }
 
 export interface Character {
+  order: number;
   type: CharacterType;
   name: string;
   rarerity?: number;
   weaponType?: WeaponType;
   cost?: number;
-  geographType?: GeographType;
+  geographType?: GeographType[];
   region?: Region;
-  abilities: IdAndLabel[];
-  abilities_kai: IdAndLabel[];
-  imageWeapons: IdAndLabel[];
-  imageFacilities: IdAndLabel[];
-  voiceActor: string;
-  illustrator: string;
+  abilityIds?: string[];
+  abilityIds_kai?: string[];
+  imageWeapons?: IdAndLabel[];
+  imageFacilities?: IdAndLabel[];
+  voiceActor?: string;
+  illustrator?: string;
   tags?: IdAndLabel[];
-  isOwn: boolean;
 }
 
-export interface Tag {
-  label: string;
-  characterIds: string[];
+export interface CharacterDoc {
+  [id: string]: Character;
+}
+
+export interface TagDoc {
+  [id: string]: {
+    label: string;
+    ids: string[];
+  };
 }

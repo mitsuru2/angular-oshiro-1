@@ -1,1 +1,15 @@
 <p>shiromusume-list works!</p>
+
+<div *ngFor="let characterTypeName of characterTypeNames">
+  <span>{{characterTypeName["name"]}}</span>
+</div>
+
+<mat-divider></mat-divider>
+
+<div *ngFor="let item of characters | keyvalue">
+  {{item.key}}
+  {{item.value["name"]}}
+  <span *ngIf="weaponTypeNameDoc&&item.value['weaponType']">{{weaponTypeNameDoc[item.value['weaponType']]['name']}}</span>
+  <span *ngIf="userOwnCharacters&&userOwnCharacters.indexOf(item.key)>=0"> o</span>
+  <span *ngIf="userOwnCharacters&&userOwnCharacters.indexOf(item.key)<0"> x</span>
+</div>
