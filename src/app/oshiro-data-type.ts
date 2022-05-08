@@ -105,17 +105,28 @@ export const enum AbilityType {
   StrategicSkill = '5', // 計略
 }
 
-export interface NameAndDispOrder {
+export interface BaseDoc {
+  [id: string]: any;
+}
+
+export interface NameWithOrder {
   name: string;
   order: number;
 }
-export interface NameAndDispOrderDoc {
-  [id: string]: NameAndDispOrder;
+export interface NameWithOrderDoc extends BaseDoc {
+  [id: string]: NameWithOrder;
 }
 
-export interface IdAndLabel {
+export interface NameWithId {
+  name: string;
   id: string;
-  label: string;
+}
+export interface NameWithIds {
+  name: string;
+  ids: string[];
+}
+export interface NameWithIdsDoc extends BaseDoc {
+  [id: string]: NameWithIds;
 }
 
 export interface Character {
@@ -129,20 +140,30 @@ export interface Character {
   region?: Region;
   abilityIds?: string[];
   abilityIds_kai?: string[];
-  imageWeapons?: IdAndLabel[];
-  imageFacilities?: IdAndLabel[];
+  imageWeapons?: NameWithId[];
+  imageFacilities?: NameWithId[];
   voiceActor?: string;
   illustrator?: string;
-  tags?: IdAndLabel[];
+  tags?: NameWithId[];
 }
-export interface CharacterDoc {
+export interface CharacterDoc extends BaseDoc {
   [id: string]: Character;
 }
 
-export interface Tag {
-  label: string;
-  ids: string[];
+export interface OshiroPlaySt {
+  characterIds?: string[];
+  weaponIds?: string[];
+  facilityIds?: string[];
 }
-export interface TagDoc {
-  [id: string]: Tag;
+export interface UserSetting {
+  hideSideMenu: boolean;
+}
+
+export interface User {
+  name: string;
+  oshiro: OshiroPlaySt;
+  setting: UserSetting;
+}
+export interface UserDoc extends BaseDoc {
+  [id: string]: User;
 }

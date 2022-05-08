@@ -61,8 +61,18 @@ export class Logger {
       }
       index = context.indexOf('(') - 1;
       if (index >= 0) {
-        context = context.substring(0, index);
-        console.log(`[TRC] ${context}()`);
+        context = context.substring(0, index) + '(';
+        let isFirst = true;
+        for (let i = 0; i < optionalParams.length; i++) {
+          if (isFirst) {
+            isFirst = false;
+          } else {
+            context += ', ';
+          }
+          context += String(optionalParams[i]);
+        }
+        context += ')';
+        console.log(`[TRC] ${context}`);
       }
     }
     return;
@@ -95,7 +105,11 @@ export class Logger {
    * @param{any[]} optionalParams These parameters are input into 'printFn'.
    * @returns{void}
    */
-  private static printBase(printFn: (...optionalParams: any[]) => void, prefix: string, ...optionalParams: any[]): void {
+  private static printBase(
+    printFn: (...optionalParams: any[]) => void,
+    prefix: string,
+    ...optionalParams: any[]
+  ): void {
     // Input top parameter only, if the list length is 1.
     if (optionalParams[0].length == 1) {
       printFn(prefix, optionalParams[0][0]);
