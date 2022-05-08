@@ -65,51 +65,50 @@ export const WeaponTypeCosts = {
 };
 
 export const enum FacilityType {
-  Gate = 0, // 門
-  Moat, // 堀
-  Wall, // 石垣
-  Loophole, // 狭間
-  WaterSource, // 水源
-  Shachihoko, // 鯱
-  Shrine, // 祠
-  Tower, // 櫓, 塔
-  Armor, // 鎧兜
-  TeaRoom, // 茶室
-  Garden, // 庭園
-  Others, // その他
+  Gate = '0', // 門
+  Moat = '1', // 堀
+  Wall = '2', // 石垣
+  Loophole = '3', // 狭間
+  WaterSource = '4', // 水源
+  Shachihoko = '5', // 鯱
+  Shrine = '6', // 祠
+  Tower = '7', // 櫓, 塔
+  Armor = '8', // 鎧兜
+  TeaRoom = '9', // 茶室
+  Garden = '10', // 庭園
+  Others = '11', // その他
 }
 
 export const enum Region {
-  Hokkaido = 0, // 北海道
-  Tohoku, // 東北
-  Kanto, // 関東
-  Koshinetsu, // 甲信越
-  Hokuriku, // 北陸
-  Tokai, // 東海
-  Kinki, // 近畿
-  Chugoku, // 中国
-  Shikoku, // 四国
-  Kyushu, // 九州
-  Okinawa, // 沖縄
-  Oversea, // 海外
-  Others, // その他
-  AnotherWorld, //異界
+  Hokkaido = '0', // 北海道
+  Tohoku = '1', // 東北
+  Kanto = '2', // 関東
+  Koshinetsu = '3', // 甲信越
+  Hokuriku = '4', // 北陸
+  Tokai = '5', // 東海
+  Kinki = '6', // 近畿
+  Chugoku = '7', // 中国
+  Shikoku = '8', // 四国
+  Kyushu = '9', // 九州
+  Okinawa = '10', // 沖縄
+  Oversea = '11', // 海外
+  Others = '12', // その他
+  AnotherWorld = '13', //異界
 }
 
 export const enum AbilityType {
-  Ability = 0, // 特技
-  GroupAbility, // 編成特技
-  OwnershipAbility, // 所持特技
-  CounterAbility, // 大破特技
-  SpecialAttack, // 特殊攻撃
-  StrategicSkill, // 計略
+  Ability = '0', // 特技
+  GroupAbility = '1', // 編成特技
+  OwnershipAbility = '2', // 所持特技
+  CounterAbility = '3', // 大破特技
+  SpecialAttack = '4', // 特殊攻撃
+  StrategicSkill = '5', // 計略
 }
 
 export interface NameAndDispOrder {
   name: string;
   order: number;
 }
-
 export interface NameAndDispOrderDoc {
   [id: string]: NameAndDispOrder;
 }
@@ -136,14 +135,14 @@ export interface Character {
   illustrator?: string;
   tags?: IdAndLabel[];
 }
-
 export interface CharacterDoc {
   [id: string]: Character;
 }
 
+export interface Tag {
+  label: string;
+  ids: string[];
+}
 export interface TagDoc {
-  [id: string]: {
-    label: string;
-    ids: string[];
-  };
+  [id: string]: Tag;
 }

@@ -119,9 +119,17 @@ export class ShiromusumeListComponent implements OnInit {
     Logger.trace();
 
     // Extract list of NameAndDispOrder from NameAndDispOrderDoc.
+    // Object.keys() returns an array of keys of the target object.
+    // Ref: https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
+    // Array.map() makes a new array by input function.
+    // Ref: https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/map
     let list = Object.keys(input).map((k) => input[k]);
 
     // Sort by display order.
+    // Here, a nameless function is used as compared function.
+    // If result of the compared function is less than or equal to zero, the sorted order will become like [a, b].
+    // Otherwise, the sorted order will become like [b, a].
+    // Ref: https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
     list.sort((a, b) => a.order - b.order);
     Logger.debug(list);
 
