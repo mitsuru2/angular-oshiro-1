@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
+import { Observable } from 'rxjs';
 import {
   CharacterDoc,
   NameWithOrder,
   NameWithOrderDoc,
+  UserDoc,
 } from '../oshiro-data-type';
 import { Logger } from '../logger';
 
@@ -28,15 +30,33 @@ export class ShiromusumeListComponent implements OnInit {
 
   getCharacters(): void {
     Logger.trace();
-    this.characters = this.dataService.getCollectionData('characters');
-    this.userOwnCharacters =
-      this.dataService.getCollectionData('users')['6MiwgNSrwlYKqCCmIqxx'][
-        'oshiro'
-      ].characterIds;
-    this.weaponTypeNameDoc =
-      this.dataService.getCollectionData('weaponTypeNames');
-    this.characterTypeNameDoc =
-      this.dataService.getCollectionData('characterTypeNames');
+
+    (
+      this.dataService.getCollectionData(
+        'characters'
+      ) as Observable<CharacterDoc>
+    ).subscribe((x) => (this.characters = x));
+
+    (
+      this.dataService.getCollectionData('users') as Observable<UserDoc>
+    ).subscribe(
+      (x) =>
+        (this.userOwnCharacters =
+          x['6MiwgNSrwlYKqCCmIqxx']['oshiro'].characterIds)
+    );
+
+    (
+      this.dataService.getCollectionData(
+        'weaponTypeNames'
+      ) as Observable<NameWithOrderDoc>
+    ).subscribe((x) => (this.weaponTypeNameDoc = x));
+
+    (
+      this.dataService.getCollectionData(
+        'characterTypeNames'
+      ) as Observable<NameWithOrderDoc>
+    ).subscribe((x) => (this.characterTypeNameDoc = x));
+
     if (this.characterTypeNameDoc != null) {
       this.characterTypeNames = this.dataService.convDocToListAndSort(
         this.characterTypeNameDoc
