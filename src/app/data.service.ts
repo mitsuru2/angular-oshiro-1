@@ -20,12 +20,14 @@ import { Logger } from './logger';
   providedIn: 'root',
 })
 export class DataService {
+  db: { id: string } = { id: 'def' };
+
   database: {
-    [collection: string]:
-      | NameWithOrderDoc
-      | CharacterDoc
-      | NameWithIdsDoc
-      | UserDoc;
+    characterTypeNames: NameWithOrderDoc;
+    weaponTypeNames: NameWithOrderDoc;
+    characters: CharacterDoc;
+    characterTags: NameWithIdsDoc;
+    users: UserDoc;
   } = {
     characterTypeNames: {
       '0': { name: '城娘', order: 0 },
@@ -109,14 +111,16 @@ export class DataService {
   getCollectionData(name: string): any {
     Logger.trace(name);
 
-    if (['users'].includes(name)) {
-      return of(this.database[name] as UserDoc);
-    } else if (['characterTypeNames', 'weaponTypeNames'].includes(name)) {
-      return of(this.database[name] as NameWithOrderDoc);
-    } else if (['characters'].includes(name)) {
-      return of(this.database[name] as CharacterDoc);
-    } else if (['characterTags'].includes(name)) {
-      return of(this.database[name] as NameWithIdsDoc);
+    if (name == 'users') {
+      return of(this.database.users);
+    } else if (name == 'characterTypeNames') {
+      return of(this.database.characterTypeNames);
+    } else if (name == 'weaponTypeNames') {
+      return of(this.database.weaponTypeNames);
+    } else if (name == 'characters') {
+      return of(this.database.characters);
+    } else if (name == 'characterTags') {
+      return of(this.database.characterTags);
     } else {
       Logger.error(`Invalid collection name: ${name}`);
     }
