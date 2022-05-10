@@ -14,17 +14,17 @@ export class AppComponent {
     public appProperty: AppProppertyService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer
-  ) {
-    this.matIconRegistry.addSvgIcon(
-      'woman',
-      this.domSanitizer.bypassSecurityTrustResourceUrl(
-        '/assets/woman_black.svg'
-      )
-    );
-  }
+  ) {}
 
   ngOnInit(): void {
     Logger.trace();
+
+    // This process register the custom svg icon image.
+    // NOTE: It doesn't work if InMemoryWebApi is available.
+    this.matIconRegistry.addSvgIcon(
+      'woman',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/woman_black.svg')
+    );
   }
 
   onClickMenuButton(e: any): void {
