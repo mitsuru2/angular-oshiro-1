@@ -19,6 +19,9 @@ import { HomeComponent } from './home/home.component';
 import { ShiromusumeListComponent } from './shiromusume-list/shiromusume-list.component';
 import { ShiromusumeNewComponent } from './shiromusume-new/shiromusume-new.component';
 import { InMemoryDataService } from './in-memory-data.service';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,8 @@ import { InMemoryDataService } from './in-memory-data.service';
     MatDividerModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
   ],
   providers: [],
   bootstrap: [AppComponent],
