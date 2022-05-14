@@ -1,22 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {
-  CharacterType,
-  GeographType,
-  Region,
-  WeaponType,
-  WeaponTypeCosts,
-  CharacterDoc,
-  NameWithOrderDoc,
-  NameWithIdsDoc,
-  UserDoc,
-  BaseDoc,
-  NameWithOrder,
-  User,
-  Character,
-} from './oshiro-data-type';
+import { CharacterDoc } from './oshiro-data-type';
 import { Logger } from './logger';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -31,23 +18,23 @@ export class DataService {
 
     let targetUrl = this.baseUrl + name;
 
-    if (name == 'users') {
-      return this.http.get<UserDoc>(targetUrl);
-    } else if (name == 'characterTypeNames') {
-      return this.http.get<NameWithOrderDoc>(targetUrl);
-    } else if (name == 'weaponTypeNames') {
-      return this.http.get<NameWithOrderDoc>(targetUrl);
-    } else if (name == 'characters') {
-      return this.http.get<CharacterDoc>(targetUrl);
-    } else if (name == 'characterTags') {
-      return this.http.get<NameWithIdsDoc>(targetUrl);
-    } else {
-      Logger.error(`Invalid collection name: ${name}`);
-    }
+    //    if (name == 'users') {
+    //      return this.http.get<UserDoc>(targetUrl);
+    //    } else if (name == 'characterTypeNames') {
+    //      return this.http.get<NameWithOrderDoc>(targetUrl);
+    //    } else if (name == 'weaponTypeNames') {
+    //      return this.http.get<NameWithOrderDoc>(targetUrl);
+    //    } else if (name == 'characters') {
+    //      return this.http.get<CharacterDoc>(targetUrl);
+    //    } else if (name == 'characterTags') {
+    //      return this.http.get<NameWithIdsDoc>(targetUrl);
+    //    } else {
+    //      Logger.error(`Invalid collection name: ${name}`);
+    //    }
     return null;
   }
 
-  convDocToList(doc: BaseDoc): any[] {
+  convDocToList(doc: any): void {
     Logger.trace();
 
     // Extract list of NameAndDispOrder from NameAndDispOrderDoc.
@@ -55,16 +42,13 @@ export class DataService {
     // Ref: https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
     // Array.map() makes a new array by input function.
     // Ref: https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/map
-    let list = Object.keys(doc).map((k) => doc[k]);
-    let tmp = list.slice();
-    Logger.debug(tmp);
-    return list;
+    //let list = Object.keys(doc).map((k) => doc[k]);
+    //let tmp = list.slice();
+    //Logger.debug(tmp);
+    //return list;
   }
 
-  convDocToListAndSort(
-    doc: NameWithOrderDoc,
-    isReverse: boolean = false
-  ): NameWithOrder[] {
+  convDocToListAndSort(doc: any, isReverse: boolean = false): void {
     Logger.trace();
 
     // Sort by display order.
@@ -72,13 +56,13 @@ export class DataService {
     // If result of the compared function is less than or equal to zero, the sorted order will become like [a, b].
     // Otherwise, the sorted order will become like [b, a].
     // Ref: https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-    let list = this.convDocToList(doc);
-    if (!isReverse) {
-      list.sort((a, b) => a.order - b.order);
-    } else {
-      list.sort((a, b) => b.order - a.order);
-    }
-    Logger.debug(list);
-    return list;
+    //let list = this.convDocToList(doc);
+    //if (!isReverse) {
+    //  list.sort((a, b) => a.order - b.order);
+    //} else {
+    //  list.sort((a, b) => b.order - a.order);
+    //}
+    //Logger.debug(list);
+    //return list;
   }
 }

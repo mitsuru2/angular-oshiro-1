@@ -3,9 +3,8 @@ import { DataService } from '../data.service';
 import { Observable } from 'rxjs';
 import {
   CharacterDoc,
-  NameWithOrder,
-  NameWithOrderDoc,
-  UserDoc,
+  CharacterTypeDoc,
+  WeaponTypeDoc,
 } from '../oshiro-data-type';
 import { Logger } from '../logger';
 
@@ -16,10 +15,9 @@ import { Logger } from '../logger';
 })
 export class ShiromusumeListComponent implements OnInit {
   characters?: CharacterDoc;
-  weaponTypeNameDoc?: NameWithOrderDoc;
+  weaponTypeDoc?: WeaponTypeDoc;
   userOwnCharacters?: string[];
-  characterTypeNameDoc?: NameWithOrderDoc;
-  characterTypeNames?: NameWithOrder[];
+  characterTypeDoc?: CharacterTypeDoc;
 
   constructor(private dataService: DataService) {}
 
@@ -31,7 +29,7 @@ export class ShiromusumeListComponent implements OnInit {
   getCharacters(): void {
     Logger.trace();
 
-    (
+    /*    (
       this.dataService.getCollectionData(
         'characters'
       ) as Observable<CharacterDoc>
@@ -62,5 +60,6 @@ export class ShiromusumeListComponent implements OnInit {
         this.characterTypeNameDoc
       );
     }
+  */
   }
 }
