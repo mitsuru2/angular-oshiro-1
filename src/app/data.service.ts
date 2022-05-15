@@ -45,9 +45,6 @@ export class DataService {
    * Private members.
    */
   // Firestore collection data.
-  private abilitiesCollection: Observable<AbilityDoc[]>;
-  private charactersCollection: Observable<CharacterDoc[]>;
-
   private collections: {
     [name: string]: Collection;
   } = {
@@ -63,10 +60,7 @@ export class DataService {
     },
   };
 
-  constructor(private firestore: AngularFirestore) {
-    this.abilitiesCollection = new Observable<AbilityDoc[]>();
-    this.charactersCollection = new Observable<CharacterDoc[]>();
-  }
+  constructor(private firestore: AngularFirestore) {}
 
   /**
    * It loads specified data collection from the data server.

@@ -31,51 +31,14 @@ export class ShiromusumeListComponent implements OnInit {
   getCharacters(): void {
     Logger.trace();
 
-    //    let obs = this.dataService.getCharacterCollection();
-
-    //this.dataService.loadCharacterCollection2();
-    //let obs = this.dataService.getCharactersCollection2();
     let obs = this.dataService.getCollection('Characters');
 
     if (obs != undefined) {
-      Logger.debug('obs is not undefined.');
       (obs as Observable<CharacterDoc[]>).subscribe(
         (x) => (this.characters = x)
       );
     } else {
-      Logger.debug('obs is undefined.');
+      Logger.error('Observable loading is failed.');
     }
-    /*    (
-      this.dataService.getCollectionData(
-        'characters'
-      ) as Observable<CharacterDoc>
-    ).subscribe((x) => (this.characters = x));
-
-    (
-      this.dataService.getCollectionData('users') as Observable<UserDoc>
-    ).subscribe(
-      (x) =>
-        (this.userOwnCharacters =
-          x['6MiwgNSrwlYKqCCmIqxx']['oshiro'].characterIds)
-    );
-
-    (
-      this.dataService.getCollectionData(
-        'weaponTypeNames'
-      ) as Observable<NameWithOrderDoc>
-    ).subscribe((x) => (this.weaponTypeNameDoc = x));
-
-    (
-      this.dataService.getCollectionData(
-        'characterTypeNames'
-      ) as Observable<NameWithOrderDoc>
-    ).subscribe((x) => (this.characterTypeNameDoc = x));
-
-    if (this.characterTypeNameDoc != null) {
-      this.characterTypeNames = this.dataService.convDocToListAndSort(
-        this.characterTypeNameDoc
-      );
-    }
-  */
   }
 }
