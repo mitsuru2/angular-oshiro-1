@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CollectionStatus, DataService } from '../data.service';
+import { Data2Service, T_AfsDoc, T_AfsMap, T_Base } from '../data-2.service';
 import { Observable } from 'rxjs';
 import {
   CharacterDoc,
@@ -8,6 +9,7 @@ import {
   WeaponTypeDoc,
 } from '../oshiro-data-type';
 import { Logger } from '../logger';
+import { Data } from '@angular/router';
 
 @Component({
   selector: 'app-shiromusume-list',
@@ -26,7 +28,7 @@ export class ShiromusumeListComponent implements OnInit {
     Characters: false,
   };
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private ds2: Data2Service) {
     Logger.trace();
   }
 
@@ -38,6 +40,12 @@ export class ShiromusumeListComponent implements OnInit {
     Logger.debug('loading map', this.isCollectionLoadedMap);
     Logger.debug(`typeof characterTypes: ${typeof this.characterTypes}`);
     Logger.debug(`characterTypes.length: ${this.characterTypes.length}`);
+
+    Logger.debug('Data2Service');
+    let dstObj: T_AfsMap = this.ds2.makeDocTable<T_AfsDoc>(
+      this.ds2.srcData[0]
+    ) as T_AfsMap;
+    Logger.debug(dstObj);
   }
 
   getCharacterTypes(): void {
