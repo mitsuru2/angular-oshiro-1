@@ -17,16 +17,25 @@ export class ShiromusumeListComponent implements OnInit {
   characters?: CharacterDoc[];
   weaponTypeDoc?: WeaponTypeDoc;
   userOwnCharacters?: string[];
-  characterTypes?: CharacterTypeDoc[];
+  characterTypes: CharacterTypeDoc[] = [
+    { id: 'dummy', name: 'hoge', order: 99, hasSubCollection: false },
+  ];
 
   constructor(private dataService: DataService) {
     Logger.trace();
+    let tmp = [0, 2, 1];
+    tmp.sort((a, b) => a - b);
+    Logger.debug(`typeof tmp[0]: ${typeof tmp[0]}`);
+    Logger.debug(`tmp.length: ${tmp.length}`);
+    Logger.debug(`tmp: ${tmp}`);
   }
 
   ngOnInit(): void {
     Logger.trace();
     this.getCharacters();
     this.getCharacterTypes();
+    Logger.debug(`typeof characterTypes: ${typeof this.characterTypes}`);
+    Logger.debug(`characterTypes.length: ${this.characterTypes.length}`);
   }
 
   getCharacterTypes(): void {
@@ -35,7 +44,7 @@ export class ShiromusumeListComponent implements OnInit {
 
     if (obs != undefined) {
       (obs as Observable<CharacterTypeDoc[]>).subscribe(
-        (x) => (this.characterTypes = x)
+        (x) => (this.characterTypes = x.sort((a, b) => a.order - b.order))
       );
     } else {
       Logger.error('Observable loading is failed.');
