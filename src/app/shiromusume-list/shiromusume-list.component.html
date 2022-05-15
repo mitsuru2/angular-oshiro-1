@@ -1,13 +1,15 @@
 <p>shiromusume-list works!</p>
 
-<!--
-<div *ngFor="let characterTypeName of characterTypeNames">
-  <span>{{characterTypeName["name"]}}</span>
+<h3>Character Types</h3>
+<div *ngFor="let chType of characterTypes">
+  <span>ID: {{chType["id"]}}</span>
+  <span> Name: {{chType["name"]}}</span>
+  <span> Order: {{chType["order"]}}</span>
 </div>
-  -->
 
 <mat-divider></mat-divider>
 
+<h3>Characters</h3>
 <div *ngFor="let character of characters">
   <span>ID: {{character.id}} </span>
   <span>name: {{character.name}} </span>

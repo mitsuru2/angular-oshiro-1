@@ -10,6 +10,7 @@ import {
   CharacterDoc,
   CharacterParamTypeDoc,
   CharacterTagDoc,
+  CharacterTypeDoc,
   FacilityDoc,
   FacilityTypeDoc,
   GeographTypeDoc,
@@ -34,7 +35,10 @@ enum CollectionStatus {
 interface Collection {
   status: CollectionStatus;
   timestamp: Date;
-  data: Observable<AbilityDoc[]> | Observable<CharacterDoc[]>;
+  data:
+    | Observable<AbilityDoc[]>
+    | Observable<CharacterTypeDoc[]>
+    | Observable<CharacterDoc[]>;
 }
 
 @Injectable({
@@ -52,6 +56,11 @@ export class DataService {
       status: CollectionStatus.Unloaded,
       timestamp: new Date(),
       data: new Observable<AbilityDoc[]>(),
+    },
+    CharacterTypes: {
+      status: CollectionStatus.Unloaded,
+      timestamp: new Date(),
+      data: new Observable<CharacterTypeDoc[]>(),
     },
     Characters: {
       status: CollectionStatus.Unloaded,
@@ -80,9 +89,15 @@ export class DataService {
     if (name == ('Abilities' as keyof typeof this.collections)) {
       let tmp = this.firestore.collection<AbilityDoc>(name); // AngularFirestoreCollection<T>
       this.collections[name].data = tmp.valueChanges({ idField: 'id' });
+    } else if (name == ('CharacterTypes' as keyof typeof this.collections)) {
+      let tmp = this.firestore.collection<CharacterTypeDoc>(name);
+      this.collections[name].data = tmp.valueChanges({ idField: 'id' });
     } else if (name == ('Characters' as keyof typeof this.collections)) {
       let tmp = this.firestore.collection<CharacterDoc>(name);
       this.collections[name].data = tmp.valueChanges({ idField: 'id' });
+    } else {
+      Logger.error(`No implementation for the collection: ${name}`);
+      return;
     }
 
     // Update status.
@@ -106,26 +121,32 @@ export class DataService {
     Logger.trace();
 
     let names = [
-      'AbilityTypes',
+      //'AbilityTypes',
       'CharacterParamTypes',
-      'FacilityTypes',
-      'GeographTypes',
-      'Regions',
-      'Users',
-      'WeaponTypes',
+      //'FacilityTypes',
+      //'GeographTypes',
+      //'Regions',
+      //'Users',
+      //'WeaponTypes',
     ];
 
-    //    for (let name of names) {
-    //      if (!this.collectionSt[name as keyof typeof this.collectionSt]) {
-    //        this.loadDataCollection(name);
-    //      }
-    //    }
+    for (let name of names) {
+      if (Object.keys(this.collections).includes(name)) {
+        if (this.collections[name].status == CollectionStatus.Unloaded) {
+          this.loadCollection(name);
+        }
+      }
+    }
     return;
   }
 
   getCollection(
     name: string
-  ): Observable<AbilityDoc[]> | Observable<CharacterDoc[]> | undefined {
+  ):
+    | Observable<AbilityDoc[]>
+    | Observable<CharacterTypeDoc[]>
+    | Observable<CharacterDoc[]>
+    | undefined {
     Logger.trace(name);
 
     // Check collection name.
