@@ -27,18 +27,9 @@ import {
 import { Logger } from './logger';
 import { collection } from '@firebase/firestore';
 
-enum CollectionStatus {
+export enum CollectionStatus {
   Unloaded = 0,
   Loaded,
-}
-
-interface Collection {
-  status: CollectionStatus;
-  timestamp: Date;
-  data:
-    | Observable<AbilityDoc[]>
-    | Observable<CharacterTypeDoc[]>
-    | Observable<CharacterDoc[]>;
 }
 
 @Injectable({
@@ -49,24 +40,29 @@ export class DataService {
    * Private members.
    */
   // Firestore collection data.
-  private collections: {
-    [name: string]: Collection;
+  private collectionStatuses: {
+    [name: string]: CollectionStatus;
   } = {
-    Abilities: {
-      status: CollectionStatus.Unloaded,
-      timestamp: new Date(),
-      data: new Observable<AbilityDoc[]>(),
-    },
-    CharacterTypes: {
-      status: CollectionStatus.Unloaded,
-      timestamp: new Date(),
-      data: new Observable<CharacterTypeDoc[]>(),
-    },
-    Characters: {
-      status: CollectionStatus.Unloaded,
-      timestamp: new Date(),
-      data: new Observable<CharacterDoc[]>(),
-    },
+    Abilities: CollectionStatus.Unloaded,
+    CharacterTypes: CollectionStatus.Unloaded,
+    Characters: CollectionStatus.Unloaded,
+  };
+  private collectionTimestamps: {
+    [name: string]: Date;
+  } = {
+    Abilities: new Date(),
+    CharacterTypes: new Date(),
+    Characters: new Date(),
+  };
+  private collections: {
+    [name: string]:
+      | Observable<AbilityDoc[]>
+      | Observable<CharacterTypeDoc[]>
+      | Observable<CharacterDoc[]>;
+  } = {
+    Abilities: new Observable<AbilityDoc[]>(),
+    CharacterTypes: new Observable<CharacterTypeDoc[]>(),
+    Characters: new Observable<CharacterDoc[]>(),
   };
 
   constructor(private firestore: AngularFirestore) {}
@@ -88,26 +84,26 @@ export class DataService {
     // Loading data.
     if (name == ('Abilities' as keyof typeof this.collections)) {
       let tmp = this.firestore.collection<AbilityDoc>(name); // AngularFirestoreCollection<T>
-      this.collections[name].data = tmp.valueChanges({ idField: 'id' });
+      this.collections[name] = tmp.valueChanges({ idField: 'id' });
     } else if (name == ('CharacterTypes' as keyof typeof this.collections)) {
       let tmp = this.firestore.collection<CharacterTypeDoc>(name);
-      this.collections[name].data = tmp.valueChanges({ idField: 'id' });
+      this.collections[name] = tmp.valueChanges({ idField: 'id' });
     } else if (name == ('Characters' as keyof typeof this.collections)) {
       let tmp = this.firestore.collection<CharacterDoc>(name);
-      this.collections[name].data = tmp.valueChanges({ idField: 'id' });
+      this.collections[name] = tmp.valueChanges({ idField: 'id' });
     } else {
       Logger.error(`No implementation for the collection: ${name}`);
       return;
     }
 
     // Update status.
-    this.collections[name].status = CollectionStatus.Loaded;
-    this.collections[name].timestamp = new Date();
+    this.collectionStatuses[name] = CollectionStatus.Loaded;
+    this.collectionTimestamps[name] = new Date();
 
     // Debug print.
     Logger.info(
       `Finish collection loading: ${name}`,
-      `Timestamp: ${this.collections[name].timestamp.toISOString()}`
+      `Timestamp: ${this.collectionTimestamps[name].toISOString()}`
     );
 
     return;
@@ -132,7 +128,7 @@ export class DataService {
 
     for (let name of names) {
       if (Object.keys(this.collections).includes(name)) {
-        if (this.collections[name].status == CollectionStatus.Unloaded) {
+        if (this.collectionStatuses[name] == CollectionStatus.Unloaded) {
           this.loadCollection(name);
         }
       }
@@ -156,12 +152,16 @@ export class DataService {
     }
 
     // Loading data if the target collection is not loaded.
-    if (this.collections[name].status == CollectionStatus.Unloaded) {
+    if (this.collectionStatuses[name] == CollectionStatus.Unloaded) {
       this.loadCollection(name);
     }
 
     // Return observable.
-    return this.collections[name].data;
+    return this.collections[name];
+  }
+
+  getCollectionStatuses(): { [name: string]: CollectionStatus } {
+    return this.collectionStatuses;
   }
 
   convDocToList(doc: any): void {

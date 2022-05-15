@@ -1,27 +1,30 @@
 <p>shiromusume-list works!</p>
 
 <h3>Character Types</h3>
-<div *ngFor="let chType of characterTypes">
-  <span>ID: {{chType["id"]}}</span>
-  <span> Name: {{chType["names"][0]}}</span>
-  <span *ngIf="chType['names'].length > 1"> > {{chType["names"][1]}}</span>
-  <span> Code: {{chType["code"]}}</span>
-  <span> Num: {{chType["num"]}}</span>
+<div *ngIf="isCollectionLoadedMap['CharacterTypes']">
+  <div *ngFor="let chType of characterTypes">
+    <span>ID: {{chType["id"]}}</span>
+    <span> Name: {{chType["names"][0]}}</span>
+    <span *ngIf="chType['names'].length > 1"> > {{chType["names"][1]}}</span>
+    <span> Code: {{chType["code"]}}</span>
+    <span> Num: {{chType["num"]}}</span>
+  </div>
 </div>
-
 <mat-divider></mat-divider>
 
 <h3>Characters</h3>
-<div *ngFor="let character of characters">
-  <span>ID: {{character.id}} </span>
-  <span>name: {{character.name}} </span>
-  <span>type: </span><span *ngFor="let type of character.types">{{character.types}}</span>
-  <span> timestamp: {{character.creationDateTime.toDate() | date:"yyyy/MM/dd (EE) HH:mm:ss"}} </span>
-  <span>rarerity: {{character.rarerity}} </span>
-  <span>geographTypes: </span>
-  <span *ngFor="let geographType of character.geographTypes">
-    {{character.geographTypes}}
-  </span>
-  <span>region: {{character.region}} </span>
-  <mat-divider></mat-divider>
+<div *ngIf="isCollectionLoadedMap['CharacterTypes']">
+  <div *ngFor="let character of characters">
+    <span>ID: {{character.id}} </span>
+    <span> Name: {{character.name}}</span>
+    <span> Type: {{characterTypes[0]['id']}}</span>
+    <span> Timestamp: {{character.creationDateTime.toDate() | date:"yyyy/MM/dd (EE) HH:mm:ss"}}</span>
+    <span> Rarerity: {{character.rarerity}} </span>
+    <span> GeographTypes: </span>
+    <span *ngFor="let geographType of character.geographTypes">
+      {{geographType}}
+    </span>
+    <span> Region: {{character.region}} </span>
+    <mat-divider></mat-divider>
+  </div>
 </div>

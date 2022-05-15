@@ -23,6 +23,13 @@ export interface CharacterTypeDoc {
   names: string[];
   num: number;
 }
+export interface CharacterTypeMap {
+  [id: string]: {
+    code: string;
+    names: string[];
+    num: number;
+  };
+}
 
 export interface GeographTypeDoc extends IdAndNameAndOrder {}
 
@@ -68,7 +75,7 @@ export interface CharacterParamTypeDoc {
 }
 
 export interface CharacterDoc extends IdAndName {
-  types: string[]; // CharacterTypeDoc.id, CharacterTypeDoc.subCharacterType.id
+  type: string; // CharacterTypeDoc.id
   creationDateTime: Timestamp;
   rarerity: number;
   geographTypes: string[]; // GeographTypeDoc.id
