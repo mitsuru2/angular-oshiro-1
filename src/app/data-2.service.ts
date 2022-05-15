@@ -4,7 +4,6 @@
 /** Core modules. */
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { type } from 'os';
 import { Observable } from 'rxjs';
 
 /** Local modules. */
