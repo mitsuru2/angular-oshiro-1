@@ -17,9 +17,11 @@ interface IdAndNameAndType extends IdAndName {
 /**
  * Data types for Firestore documents.
  */
-export interface CharacterTypeDoc extends IdAndNameAndOrder {
-  hasSubCollection: boolean;
-  subCharacterType?: IdAndNameAndOrder;
+export interface CharacterTypeDoc {
+  id: string;
+  code: string;
+  names: string[];
+  num: number;
 }
 
 export interface GeographTypeDoc extends IdAndNameAndOrder {}

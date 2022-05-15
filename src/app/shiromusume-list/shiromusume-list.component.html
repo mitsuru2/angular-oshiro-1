@@ -3,8 +3,10 @@
 <h3>Character Types</h3>
 <div *ngFor="let chType of characterTypes">
   <span>ID: {{chType["id"]}}</span>
-  <span> Name: {{chType["name"]}}</span>
-  <span> Order: {{chType["order"]}}</span>
+  <span> Name: {{chType["names"][0]}}</span>
+  <span *ngIf="chType['names'].length > 1"> > {{chType["names"][1]}}</span>
+  <span> Code: {{chType["code"]}}</span>
+  <span> Num: {{chType["num"]}}</span>
 </div>
 
 <mat-divider></mat-divider>
