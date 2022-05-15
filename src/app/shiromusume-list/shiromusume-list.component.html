@@ -8,12 +8,16 @@
 
 <mat-divider></mat-divider>
 
-<!--
-<div *ngFor="let item of characters | keyvalue">
-  {{item.key}}
-  {{item.value["name"]}}
-    <span *ngIf="weaponTypeNameDoc&&item.value['weaponType']">{{weaponTypeNameDoc[item.value['weaponType']]['name']}}</span>
-    <span *ngIf="userOwnCharacters&&userOwnCharacters.indexOf(item.key)>=0"> o</span>
-    <span *ngIf="userOwnCharacters&&userOwnCharacters.indexOf(item.key)<0"> x</span>
+<div *ngFor="let character of characters">
+  <span>ID: {{character.id}} </span>
+  <span>name: {{character.name}} </span>
+  <span>type: </span><span *ngFor="let type of character.types">{{character.types}}</span>
+  <span> timestamp: {{character.creationDateTime.toDate() | date:"yyyy/MM/dd (EE) HH:mm:ss"}} </span>
+  <span>rarerity: {{character.rarerity}} </span>
+  <span>geographTypes: </span>
+  <span *ngFor="let geographType of character.geographTypes">
+    {{character.geographTypes}}
+  </span>
+  <span>region: {{character.region}} </span>
+  <mat-divider></mat-divider>
 </div>
-  -->

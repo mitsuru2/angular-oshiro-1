@@ -1,7 +1,7 @@
 import { ApplicationInitStatus, Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AppProppertyService, AppSt } from './app-propperty.service';
+import { AppProppertyService } from './app-propperty.service';
 import { Logger } from './logger';
 
 @Component({
@@ -14,17 +14,19 @@ export class AppComponent {
     public appProperty: AppProppertyService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     Logger.trace();
-
     // This process register the custom svg icon image.
-    // NOTE: It doesn't work if InMemoryWebApi is available.
+    // NOTE: This process must be executed in constructor.
+    //       ngOnInit() is too late.
     this.matIconRegistry.addSvgIcon(
       'woman',
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/woman_black.svg')
     );
+  }
+
+  ngOnInit(): void {
+    Logger.trace();
   }
 
   onClickMenuButton(e: any): void {

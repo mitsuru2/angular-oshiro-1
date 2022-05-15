@@ -14,12 +14,14 @@ import { Logger } from '../logger';
   styleUrls: ['./shiromusume-list.component.css'],
 })
 export class ShiromusumeListComponent implements OnInit {
-  characters?: CharacterDoc;
+  characters?: CharacterDoc[];
   weaponTypeDoc?: WeaponTypeDoc;
   userOwnCharacters?: string[];
   characterTypeDoc?: CharacterTypeDoc;
 
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService) {
+    Logger.trace();
+  }
 
   ngOnInit(): void {
     Logger.trace();
@@ -29,6 +31,20 @@ export class ShiromusumeListComponent implements OnInit {
   getCharacters(): void {
     Logger.trace();
 
+    //    let obs = this.dataService.getCharacterCollection();
+
+    //this.dataService.loadCharacterCollection2();
+    //let obs = this.dataService.getCharactersCollection2();
+    let obs = this.dataService.getCollection('Characters');
+
+    if (obs != undefined) {
+      Logger.debug('obs is not undefined.');
+      (obs as Observable<CharacterDoc[]>).subscribe(
+        (x) => (this.characters = x)
+      );
+    } else {
+      Logger.debug('obs is undefined.');
+    }
     /*    (
       this.dataService.getCollectionData(
         'characters'

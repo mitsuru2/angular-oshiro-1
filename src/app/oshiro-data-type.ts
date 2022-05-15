@@ -1,3 +1,5 @@
+import { Timestamp } from '@firebase/firestore-types';
+
 /**
  * Base data types (private)
  */
@@ -65,7 +67,7 @@ export interface CharacterParamTypeDoc {
 
 export interface CharacterDoc extends IdAndName {
   types: string[]; // CharacterTypeDoc.id, CharacterTypeDoc.subCharacterType.id
-  creationDateTime: Date;
+  creationDateTime: Timestamp;
   rarerity: number;
   geographTypes: string[]; // GeographTypeDoc.id
   region: string; // RegionDoc.id

@@ -3,9 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-//import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
 
 /** Angular Material */
 import { MatIconModule } from '@angular/material/icon';
@@ -20,7 +18,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ShiromusumeListComponent } from './shiromusume-list/shiromusume-list.component';
 import { ShiromusumeNewComponent } from './shiromusume-new/shiromusume-new.component';
-//import { InMemoryDataService } from './in-memory-data.service';
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -40,9 +37,7 @@ import { environment } from '../environments/environment';
     MatSidenavModule,
     MatDividerModule,
     HttpClientModule,
-    //    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService),
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore()),
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [],
   bootstrap: [AppComponent],
