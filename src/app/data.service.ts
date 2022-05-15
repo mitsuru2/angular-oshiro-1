@@ -11,6 +11,7 @@ import {
   CharacterParamTypeDoc,
   CharacterTagDoc,
   CharacterTypeDoc,
+  CharacterTypeMap,
   FacilityDoc,
   FacilityTypeDoc,
   GeographTypeDoc,
@@ -65,6 +66,9 @@ export class DataService {
     Characters: new Observable<CharacterDoc[]>(),
   };
 
+  // Local data table.
+  characterTypes: CharacterTypeMap[] = [];
+
   constructor(private firestore: AngularFirestore) {}
 
   /**
@@ -118,7 +122,8 @@ export class DataService {
 
     let names = [
       //'AbilityTypes',
-      'CharacterParamTypes',
+      'CharacterTypes',
+      //'CharacterParamTypes',
       //'FacilityTypes',
       //'GeographTypes',
       //'Regions',
@@ -133,6 +138,20 @@ export class DataService {
         }
       }
     }
+
+    (
+      this.collections['CharacterTypes'] as Observable<CharacterTypeDoc[]>
+    ).subscribe((list) => {
+      Logger.debug('Subscribing in DataService.');
+      for (let item of list) {
+        //let tmpObj = { code: item.code, names: item.names, num: item.num };
+        let tmpObj2 = {
+          [item.id]: { code: item.code, names: item.names, num: item.num },
+        };
+        this.characterTypes.push(tmpObj2);
+      }
+      Logger.debug(this.characterTypes);
+    });
     return;
   }
 

@@ -32,6 +32,7 @@ export class ShiromusumeListComponent implements OnInit {
 
   ngOnInit(): void {
     Logger.trace();
+    this.dataService.loadStartingData();
     this.getCharacters();
     this.getCharacterTypes();
     Logger.debug('loading map', this.isCollectionLoadedMap);
