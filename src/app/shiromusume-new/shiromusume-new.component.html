@@ -1,13 +1,33 @@
 <p>shiromusume-new works!</p>
 
+<mat-divider></mat-divider>
 <h3>Abilities</h3>
-Status: {{abilities?.getStatus()}}
-<div *ngIf="abilityStatus !== 'Undefined'">
-    hogehoge
+<div>Collection Status: {{abilitiesProp?.getStatus()}}</div>
+
+<div *ngIf="abilitiesProp.getStatus() === 'Loaded'">
+    <table rules="all">
+        <tr><td>Key</td><td>Name</td><td>Type(ID)</td><td>Typd(name)</td></tr>
+        <tr *ngFor="let key of abilitiesKeys">
+            <td>{{key}}</td>
+            <td>{{abilitiesDoc[key].name}}</td>
+            <td>{{abilitiesDoc[key].type}}</td>
+            <td *ngIf="abilityTypesProp.getStatus() === 'Loaded'">{{abilityTypesDoc[abilitiesDoc[key].type].name}}</td>
+        </tr>
+    </table>
 </div>
 
+
+<mat-divider></mat-divider>
 <h3>AbilityTypes</h3>
-Status: {{abilityTypeStatus}}
-<div *ngIf="abilityTypeStatus !== 'Undefined'">
-    fugafuga
+<div>Collection Status: {{abilityTypesProp.getStatus()}}</div>
+<div *ngIf="abilityTypesProp.getStatus() === 'Loaded'">
+    <table rules="all">
+        <tr><td>Key</td><td>Name</td><td>Order</td></tr>
+        <tr *ngFor="let key of abilityTypesKeys">
+            <td>{{key}}</td>
+            <td>{{abilityTypesDoc[key].name}}</td>
+            <td>{{abilityTypesDoc[key].order}}</td>
+        </tr>
+    </table>
+
 </div>

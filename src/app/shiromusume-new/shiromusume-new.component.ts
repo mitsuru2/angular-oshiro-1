@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Logger } from '../logger'
 import { Data2Service } from '../data-2.service'
-import { FsCollectionName, TFsCollectionName } from '../oshiro-data-type'
+import { FsAbilityDoc, FsAbilityTypeDoc, FsCollectionName } from '../oshiro-data-type'
 import { FsCollectionStatus } from '../fs-collection-wrapper'
 
 @Component({
@@ -12,14 +12,21 @@ import { FsCollectionStatus } from '../fs-collection-wrapper'
 export class ShiromusumeNewComponent implements OnInit {
   constructor (private ds : Data2Service) {}
 
-  abilityStatus = this.ds.getStatus(FsCollectionName.Abilities)
-  abilityTypeStatus = this.ds.getStatus(FsCollectionName.AbilityTypes)
-  abilities = this.ds.getCollection(FsCollectionName.Abilities)
+  abilitiesProp = this.ds.getCollection(FsCollectionName.Abilities)
+  abilitiesDoc = this.abilitiesProp.getDocument() as FsAbilityDoc
+  abilitiesKeys = this.abilitiesProp.getKeys()
+  abilityTypesProp = this.ds.getCollection(FsCollectionName.AbilityTypes)
+  abilityTypesDoc = this.abilityTypesProp.getDocument() as FsAbilityTypeDoc
+  abilityTypesKeys = this.abilityTypesProp.getKeys()
 
   ngOnInit (): void {
     Logger.trace()
 
-    this.ds.loadData(FsCollectionName.Abilities)
-    this.ds.loadData(FsCollectionName.AbilityTypes)
+    if (this.abilitiesProp.getStatus() !== FsCollectionStatus.Loaded) {
+      this.ds.loadData(FsCollectionName.Abilities)
+    }
+    if (this.abilityTypesProp.getStatus() !== FsCollectionStatus.Loaded) {
+      this.ds.loadData(FsCollectionName.AbilityTypes)
+    }
   }
 }

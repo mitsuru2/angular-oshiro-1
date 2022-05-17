@@ -10,7 +10,7 @@ import { Logger } from './logger'
 import { FsCollectionWrapper, FsCollectionStatus } from './fs-collection-wrapper'
 import { AngularFirestore } from '@angular/fire/compat/firestore'
 
-type FsCollection = FsCollectionWrapper<FsAbilityAfs, FsAbilityDoc> | FsCollectionWrapper<FsAbilityTypeAfs, FsAbilityTypeDoc>
+type FsCollection = FsCollectionWrapper<FsAbilityAfs> | FsCollectionWrapper<FsAbilityTypeAfs>
 
 /**
  * Service class: Data2Service
@@ -19,10 +19,12 @@ type FsCollection = FsCollectionWrapper<FsAbilityAfs, FsAbilityDoc> | FsCollecti
   providedIn: 'root'
 })
 export class Data2Service {
-  private abilities = new FsCollectionWrapper<FsAbilityAfs, FsAbilityDoc>('Abilities')
-  private abilityTypes = new FsCollectionWrapper<FsAbilityTypeAfs, FsAbilityTypeDoc>('AbilityTypes')
+  private dummyCollection = new FsCollectionWrapper<FsAbilityAfs>('Abilities')
+  private abilities = new FsCollectionWrapper<FsAbilityAfs>('Abilities')
+  private abilityTypes = new FsCollectionWrapper<FsAbilityTypeAfs>('AbilityTypes')
 
   constructor (private afs: AngularFirestore) {
+    Logger.trace()
   }
 
   loadData (name: FsCollectionName) {
@@ -43,13 +45,14 @@ export class Data2Service {
     }
   }
 
-  getCollection (name:FsCollectionName):FsCollection | undefined {
+  getCollection (name:FsCollectionName):FsCollection {
     if (name === FsCollectionName.Abilities) {
       return this.abilities
     } else if (name === FsCollectionName.AbilityTypes) {
       return this.abilityTypes
     } else {
-      return undefined
+      Logger.error(`Unsupported Firesotre collection name: ${name}`)
+      return this.dummyCollection
     }
   }
 }
