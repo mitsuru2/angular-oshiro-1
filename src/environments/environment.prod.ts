@@ -1,4 +1,4 @@
-import { LogLevel } from 'src/app/log-level';
+import { TLogLevel } from 'src/app/log-level'
 
 export const environment = {
   firebase: {
@@ -9,8 +9,8 @@ export const environment = {
     apiKey: 'AIzaSyC08vdvywFRwH03uO8OaIM3k-blAfB8HWI',
     authDomain: 'angular-oshiro-1-4497a.firebaseapp.com',
     messagingSenderId: '900987277035',
-    measurementId: 'G-MH1VESMFZY',
+    measurementId: 'G-MH1VESMFZY'
   },
   production: true,
-  logLevel: LogLevel.Info,
-};
+  logLevel: TLogLevel.Info
+}

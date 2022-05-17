@@ -2,7 +2,7 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { LogLevel } from 'src/app/log-level';
+import { TLogLevel } from 'src/app/log-level'
 
 export const environment = {
   firebase: {
@@ -13,11 +13,11 @@ export const environment = {
     apiKey: 'AIzaSyC08vdvywFRwH03uO8OaIM3k-blAfB8HWI',
     authDomain: 'angular-oshiro-1-4497a.firebaseapp.com',
     messagingSenderId: '900987277035',
-    measurementId: 'G-MH1VESMFZY',
+    measurementId: 'G-MH1VESMFZY'
   },
   production: false,
-  logLevel: LogLevel.Trace,
-};
+  logLevel: TLogLevel.Trace
+}
 
 /*
  * For easier debugging in development mode, you can import the following file

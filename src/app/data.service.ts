@@ -88,10 +88,13 @@ export class DataService {
     // Loading data.
     if (name == ('Abilities' as keyof typeof this.collections)) {
       let tmp = this.firestore.collection<AbilityDoc>(name); // AngularFirestoreCollection<T>
+
       this.collections[name] = tmp.valueChanges({ idField: 'id' });
     } else if (name == ('CharacterTypes' as keyof typeof this.collections)) {
+      Logger.debug('Before collection');
       let tmp = this.firestore.collection<CharacterTypeDoc>(name);
       this.collections[name] = tmp.valueChanges({ idField: 'id' });
+      Logger.debug('After collection');
     } else if (name == ('Characters' as keyof typeof this.collections)) {
       let tmp = this.firestore.collection<CharacterDoc>(name);
       this.collections[name] = tmp.valueChanges({ idField: 'id' });

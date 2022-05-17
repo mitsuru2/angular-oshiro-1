@@ -1,89 +1,138 @@
-import { Timestamp } from '@firebase/firestore-types';
+import { Timestamp } from '@firebase/firestore-types'
 
 /**
- * Base data types (private)
+ * Firestore collection names.
  */
-interface IdAndName {
-  id: string;
-  name: string;
-}
-interface IdAndNameAndOrder extends IdAndName {
-  order: number;
-}
-interface IdAndNameAndType extends IdAndName {
-  type: string;
+export const FsCollectionName = {
+  Abilities: 'Abilities',
+  AbilityTypes: 'AbilityTypes',
+  CharacterParamTypes: 'CharacterParamTypes',
+  CharacterTags: 'CharacterTags',
+  Characters: 'Characters',
+  Facilities: 'Facilities',
+  FacilityTypes: 'FacilityTypes',
+  GeographTypes: 'GeographTypes',
+  Illustrators: 'Illustrators',
+  Regions: 'Regions',
+  UserCharacterLists: 'UserCharacterLists',
+  UserFacilityLists: 'UserFacilityLists',
+  UserWeaponLists: 'UserWeaponLists',
+  VoiceActors: 'VoiceActors',
+  WeaponTypes: 'WeaponTypes',
+  Weapons: 'Weapons'
+} as const
+export type FsCollectionName = typeof FsCollectionName[keyof typeof FsCollectionName]
+
+export type TFsCollectionName =
+  | 'Abilities'
+  | 'AbilityTypes'
+  | 'CharacterParamTypes'
+  | 'CharacterTags'
+  | 'CharacterTypes'
+  | 'Characters'
+  | 'Facilities'
+  | 'FacilityTypes'
+  | 'GeographTypes'
+  | 'Illustrators'
+  | 'Regions'
+  | 'UserCharacterLists'
+  | 'UserFacilityLists'
+  | 'UserWeaponLists'
+  | 'Users'
+  | 'VoiceActors'
+  | 'WeaponTypes'
+  | 'Weapons';
+export namespace TFsCollectionName {
+  export const Abilities: TFsCollectionName = 'Abilities'
+  export const AbilityTypes: TFsCollectionName = 'AbilityTypes'
+  export const CharacterparamTypes: TFsCollectionName = 'CharacterParamTypes'
+  export const CharacterTags: TFsCollectionName = 'CharacterTags'
+  export const CharacterTypes: TFsCollectionName = 'CharacterTypes'
+  export const Characters: TFsCollectionName = 'Characters'
+  export const Facilities: TFsCollectionName = 'Facilities'
+  export const FacilityTypes: TFsCollectionName = 'FacilityTypes'
+  export const GeographTypes: TFsCollectionName = 'GeographTypes'
+  export const Illustrators: TFsCollectionName = 'Illustrators'
+  export const Regions: TFsCollectionName = 'Regions'
+  export const UserCharacterLists: TFsCollectionName = 'UserCharacterLists'
+  export const UserFacilityLists: TFsCollectionName = 'UserFacilityLists'
+  export const UserWeaponLists: TFsCollectionName = 'UserWeaponLists'
+  export const Users: TFsCollectionName = 'Users'
+  export const VoiceActors: TFsCollectionName = 'VoiceActors'
+  export const WeaponTypes: TFsCollectionName = 'WeaponTypes'
+  export const Weapons: TFsCollectionName = 'Weapons'
 }
 
 /**
  * Data types for Firestore documents.
  */
 /** Collection: Abilities */
-export interface T_Ability_Base {
+type FsAbilityDocBase = {
   name: string;
   type: string; // AbilityTypes.id
   desc: string[];
-}
-export interface T_Ability_AfsDoc extends T_Ability_Base {
+};
+export type FsAbilityAfs = {
   id: string;
-}
-export interface T_Ability_FsDoc {
-  [id: string]: T_Ability_Base;
-}
+} & FsAbilityDocBase;
+export type FsAbilityDoc = {
+  [id: string]: FsAbilityDocBase;
+};
 
 /** Collection: AbilityTypes */
-export interface T_AbilityType_Base {
+type FsAbilityTypeBase = {
   name: string;
   order: number;
-}
-export interface T_AbilityType_AfsDoc extends T_AbilityType_Base {
+};
+export type FsAbilityTypeAfs = {
   id: string;
-}
-export interface T_AbilityType_FsDoc {
-  [id: string]: T_AbilityType_Base;
-}
+} & FsAbilityTypeBase;
+export type FsAbilityTypeDoc = {
+  [id: string]: FsAbilityTypeBase;
+};
 
 /** Collection: CharacterParamTypes */
-export interface T_CharacterParamType_Base {
+type TCharacterParamTypeBase = {
   name: {
     normal: string;
     short: string;
   };
   order: number;
-}
-export interface T_CharacterParamType_AfsDoc extends T_CharacterParamType_Base {
+};
+export type TCharacterParamTypeDocAfs = {
   id: string;
-}
-export interface T_CharacterParamType_FsDoc {
-  [id: string]: T_CharacterParamType_Base;
-}
+} & TCharacterParamTypeBase;
+export type TCharacterParamTypeDocFs = {
+  [id: string]: TCharacterParamTypeBase;
+};
 
 /** Collection: CharacterTags */
-export interface T_CharacterTag_Base {
+type TCharacterTagBase = {
   name: string;
   characters: string[];
-}
-export interface T_CharacterTag_AfsDoc extends T_CharacterTag_Base {
+};
+export type TCharacterTagDocAfs = {
   is: string;
-}
-export interface T_CharacterTag_FsDoc {
-  [id: string]: T_CharacterTag_Base;
-}
+} & TCharacterTagBase;
+export type TCharacterTagDocFs = {
+  [id: string]: TCharacterTagBase;
+};
 
 /** Collection: CharacterTypes */
-export interface T_CharacterType_Base {
+type TCharacterTypeBase = {
   code: string;
   names: string[];
   num: number;
-}
-export interface T_CharacterType_AfsDoc extends T_CharacterType_Base {
+};
+export type TCharacterTypeDocAfs = {
   id: string;
-}
-export interface T_CharacterType_FsDoc {
-  [id: string]: T_CharacterType_Base;
-}
+} & TCharacterTypeBase;
+export type TCharacterTypeDocFs = {
+  [id: string]: TCharacterTypeBase;
+};
 
 /** Collection: Characters */
-export interface T_Character_Base {
+type TCharacterBase = {
   name: string;
   type: string; // CharacterTypeDoc.id
   creationDateTime: Timestamp;
@@ -97,166 +146,179 @@ export interface T_Character_Base {
   abilities_kai?: string; // AbilityDoc.id
   voiceActors?: string[]; // VoiceActorDoc.id
   illustrators?: string[]; // IllustratorDoc.id
-  imageWeapons?: IdAndName[]; // {WeaponDoc.id, string}
-  imageFacilities?: IdAndNameAndType[]; // {FacilityDoc.id, string, FacilityTypeDoc.id}
+  imageWeapons?: {'id':string, 'name':string}[]; // {WeaponDoc.id, string}
+  imageFacilities?: {'id':string, 'name':string, 'type':string}[]; // {FacilityDoc.id, string, FacilityTypeDoc.id}
   tags?: string[]; // CharacterTagDoc.id
-}
-export interface T_Character_AfsDoc extends T_Character_Base {
+};
+export type TCharacterDocAfs = {
   id: string;
-}
-export interface T_Character_FsDoc {
-  [id: string]: T_Character_Base;
-}
+} & TCharacterBase;
+export type TCharacterDocFs = {
+  [id: string]: TCharacterBase;
+};
 
 /** Collection: Facilities */
-export interface T_Facility_Base {
+type TFacilityBase = {
   name: string;
   type: string; // FacilityTypes.id
   rarerity: number;
   desc: string[];
-}
-export interface T_Facility_AfsDoc extends T_Facility_Base {
+};
+export type TFacilityDocAfs = {
   id: string;
-}
-export interface T_Facility_FsDoc {
-  [id: string]: T_Facility_Base;
-}
+} & TFacilityBase;
+export type TFacilityDocFs = {
+  [id: string]: TFacilityBase;
+};
 
 /** Collection: FacilityTypes */
-export interface T_FacilityType_Base {
+type TFacilityTypeBase = {
   name: string;
   order: string;
-}
-export interface T_FacilityType_AfsDoc extends T_FacilityType_Base {
+};
+export type TFacilityTypeDocAfs = {
   id: string;
-}
-export interface T_FacilityType_FsDoc {
-  [id: string]: T_FacilityType_Base;
-}
+} & TFacilityTypeBase;
+export type TFacilityTypeDocFs = {
+  [id: string]: TFacilityTypeBase;
+};
 
 /** Collection: GeographTypes */
-export interface T_GeographType_Base {
+type TGeographTypeBase = {
   name: string;
   order: string;
-}
-export interface T_GeographType_AfsDoc extends T_GeographType_Base {
+};
+export type TGeographTypeDocAfs = {
   id: string;
-}
-export interface T_GeographType_FsDoc {
-  [id: string]: T_GeographType_Base;
-}
+} & TGeographTypeBase;
+export type TGeographTypeDocFs = {
+  [id: string]: TGeographTypeBase;
+};
 
 /** Collection: Illustrators */
-export interface T_Illustrator_Base {
+type TIllustratorBase = {
   name: string;
-}
-export interface T_Illustrator_AfsDoc extends T_Illustrator_Base {
+};
+export type TIllustratorDocAfs = {
   id: string;
-}
-export interface T_Illustrator_FsDoc {
-  [id: string]: T_Illustrator_Base;
-}
+} & TIllustratorBase;
+export type TIllustratorDocFs = {
+  [id: string]: TIllustratorBase;
+};
 
 /** Collection: Regions */
-export interface T_Region_Base {
+type TRegionBase = {
   name: string;
   order: string;
-}
-export interface T_Region_AfsDoc extends T_Region_Base {
+};
+export type TRegionDocAfs = {
   id: string;
-}
-export interface T_Region_FsDoc {
-  [id: string]: T_Region_Base;
-}
+} & TRegionBase;
+export type TRegionDocFs = {
+  [id: string]: TRegionBase;
+};
 
 /** Collection: UserCharacterLists */
-export interface T_UserCharacterList_Base {
+type TUserCharacterListBase = {
   user: string; // UserDoc.id
   characters: string[]; // CharacterDoc.id
-}
-export interface T_UserCharacterList_AfsDoc extends T_UserCharacterList_Base {
+};
+export type TUserCharacterListDocAfs = {
   id: string;
-}
-export interface T_UserCharacterList_FsDoc {
-  [id: string]: T_UserCharacterList_Base;
-}
+} & TUserCharacterListBase;
+export type TUserCharacterListDocFs = {
+  [id: string]: TUserCharacterListBase;
+};
 
 /** Collection: UserFacilityLists */
-export interface T_UserFacilityList_Base {
+type TUserFacilityListBase = {
   user: string; // UserDoc.id
   characters: string[]; // CharacterDoc.id
-}
-export interface T_UserFacilityList_AfsDoc extends T_UserFacilityList_Base {
+};
+export type TUserFacilityListDocAfs = {
   id: string;
-}
-export interface T_UserFacilityList_FsDoc {
-  [id: string]: T_UserFacilityList_Base;
-}
+} & TUserFacilityListBase;
+export type TUserFacilityListDocFs = {
+  [id: string]: TUserFacilityListBase;
+};
 
 /** Collection: UserWeaponLists */
-export interface T_UserWeaponList_Base {
+type TUserWeaponListBase = {
   user: string; // UserDoc.id
   characters: string[]; // CharacterDoc.id
-}
-export interface T_UserWeaponList_AfsDoc extends T_UserWeaponList_Base {
+};
+export type TUserWeaponListDocAfs = {
   id: string;
-}
-export interface T_UserWeaponList_FsDoc {
-  [id: string]: T_UserWeaponList_Base;
-}
+} & TUserWeaponListBase;
+export type TUserWeaponListDocFs = {
+  [id: string]: TUserWeaponListBase;
+};
 
 /** Collection: Users */
-export interface T_User_Base {
+type TUserBase = {
   name: string;
-}
-export interface T_User_AfsDoc extends T_User_Base {
+};
+export type TUserDocAfs = {
   id: string;
-}
-export interface T_User_FsDoc {
-  [id: string]: T_User_Base;
-}
+} & TUserBase;
+export type TUserDocFs = {
+  [id: string]: TUserBase;
+};
 
 /** Collection: VoiceActors */
-export interface T_VoiceActor_Base {
+type TVoiceActorBase = {
   name: string;
-}
-export interface T_VoiceActor_AfsDoc extends T_VoiceActor_Base {
+};
+export type TVoiceActorDocAfs = {
   id: string;
-}
-export interface T_VoiceActor_FsDoc {
-  [id: string]: T_VoiceActor_Base;
-}
+} & TVoiceActorBase;
+export type TVoiceActorDocFs = {
+  [id: string]: TVoiceActorBase;
+};
 
 /** Collection: WeaponTypes */
-export interface T_WeaponType_Base {
+type TWeaponTypeBase = {
   name: string;
   order: number;
   baseCost: number;
-}
-export interface T_WeaponType_AfsDoc extends T_WeaponType_Base {
+};
+export type TWeaponTypeDocAfs = {
   id: string;
-}
-export interface T_WeaponType_FsDoc {
-  [id: string]: T_WeaponType_Base;
-}
+} & TWeaponTypeBase;
+export type TWeaponTypeDocFs = {
+  [id: string]: TWeaponTypeBase;
+};
 
 /** Collection: Weapons */
-export interface T_Weapon_Base {
+type TWeaponBase = {
   name: string;
   type: string; // WeaponTypes.id
   rarerity: number;
   desc: string[];
-}
-export interface T_Weapon_AfsDoc extends T_Weapon_Base {
+};
+export type TWeaponDocAfs = {
   id: string;
-}
-export interface T_Weapon_FsDoc {
-  [id: string]: T_Weapon_Base;
-}
+} & TWeaponBase;
+export type TWeaponDocFs = {
+  [id: string]: TWeaponBase;
+};
 
 /**
  * Old version definitions.
  */
+/**
+ * Base data types (private)
+ */
+interface IdAndName {
+  id: string;
+  name: string;
+}
+interface IdAndNameAndOrder extends IdAndName {
+  order: number;
+}
+interface IdAndNameAndType extends IdAndName {
+  type: string;
+}
 export interface CharacterTypeDoc {
   id: string;
   code: string;
