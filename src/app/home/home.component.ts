@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { Logger } from '../logger';
+import { Component, OnInit } from '@angular/core'
+import { Logger } from '../logger'
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  constructor () {
+    Logger.trace()
+  }
 
-  ngOnInit(): void {
-    Logger.trace();
+  ngOnInit (): void {
+    Logger.trace()
   }
 }

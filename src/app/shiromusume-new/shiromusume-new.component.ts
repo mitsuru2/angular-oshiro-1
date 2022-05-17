@@ -10,7 +10,9 @@ import { FsCollectionStatus } from '../fs-collection-wrapper'
   styleUrls: ['./shiromusume-new.component.css']
 })
 export class ShiromusumeNewComponent implements OnInit {
-  constructor (private ds : Data2Service) {}
+  constructor (private ds : Data2Service) {
+    Logger.trace()
+  }
 
   abilitiesProp = this.ds.getCollection(FsCollectionName.Abilities)
   abilitiesDoc = this.abilitiesProp.getDocument() as FsAbilityDoc
