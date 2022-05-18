@@ -36,6 +36,7 @@ export class FsCollectionWrapper<T> {
   private observable: Observable<T[]>
   private documents: {[id:string]: any}
   private keys: string[]
+  private cbFns: (()=>void)[]
 
   constructor (name: FsCollectionName) {
     Logger.trace(name)
@@ -45,6 +46,7 @@ export class FsCollectionWrapper<T> {
     this.observable = new Observable<T[]>()
     this.documents = {}
     this.keys = []
+    this.cbFns = []
   }
 
   getStatus (): FsCollectionStatus {
@@ -78,6 +80,10 @@ export class FsCollectionWrapper<T> {
     this.startSubscribe()
   }
 
+  registerCallback (cbFn:()=>void) {
+    this.cbFns.push(cbFn)
+  }
+
   /**
    * It updates '.status' property with input status value.
    * And it also store timestamp and outputs log record.
@@ -109,6 +115,9 @@ export class FsCollectionWrapper<T> {
     this.observable.subscribe((afsData) => {
       this.updateFsDocumentFromAfsData(afsData)
       this.updateKeys(Object.keys(this.documents))
+      for (const cbFn of this.cbFns) {
+        cbFn()
+      }
       this.updateStatus(FsCollectionStatus.Loaded)
     })
   }
@@ -119,6 +128,7 @@ export class FsCollectionWrapper<T> {
    * @param keys Target key array.
    */
   private updateKeys (keys: string[]): void {
+    Logger.trace()
     const length = this.keys.length
     for (let i = 0; i < length; i++) {
       this.keys.pop()

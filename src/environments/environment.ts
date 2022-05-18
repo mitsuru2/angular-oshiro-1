@@ -16,7 +16,7 @@ export const environment = {
     measurementId: 'G-MH1VESMFZY'
   },
   production: false,
-  logLevel: TLogLevel.Trace
+  logLevel: TLogLevel.Debug
 }
 
 /*

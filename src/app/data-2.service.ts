@@ -10,12 +10,14 @@ import { FsAbilityAfs, FsAbilityTypeAfs, FsCharacterParamTypeAfs, FsCharacterTag
 import { FsCollectionWrapper } from './fs-collection-wrapper'
 import { Logger } from './logger'
 
-type FsCollection =
+export type FsCollection =
   | FsCollectionWrapper<FsAbilityAfs>
   | FsCollectionWrapper<FsAbilityTypeAfs>
   | FsCollectionWrapper<FsCharacterParamTypeAfs>
   | FsCollectionWrapper<FsCharacterTagAfs>
   | FsCollectionWrapper<FsCharacterTypeAfs>
+
+export type FsCollections = {[name: string]: FsCollection}
 
 /**
  * Service class: Data2Service
@@ -29,36 +31,30 @@ export class Data2Service {
   private characterParamTypes = new FsCollectionWrapper<FsCharacterParamTypeAfs>(FsCollectionName.CharacterParamTypes)
   private characterTags = new FsCollectionWrapper<FsCharacterTagAfs>(FsCollectionName.CharacterTags)
   private characterTypes = new FsCollectionWrapper<FsCharacterTypeAfs>(FsCollectionName.CharacterTypes)
+  private collections: FsCollections = {
+    Abilities: this.abilities,
+    AbilityTypes: this.abilityTypes,
+    CharacterParamTypes: this.characterParamTypes,
+    CharacterTags: this.characterTags,
+    CharacterTypes: this.characterTypes
+  }
 
   constructor (private afs: AngularFirestore) {
     Logger.trace()
   }
 
   loadData (name: FsCollectionName, isReload: boolean = false) {
-    if (name === FsCollectionName.Abilities) {
-      this.abilities.loadData(this.afs, isReload)
-    } else if (name === FsCollectionName.AbilityTypes) {
-      this.abilityTypes.loadData(this.afs, isReload)
-    } else if (name === FsCollectionName.CharacterParamTypes) {
-      this.characterParamTypes.loadData(this.afs, isReload)
-    } else if (name === FsCollectionName.CharacterTags) {
-      this.characterTags.loadData(this.afs, isReload)
-    } else if (name === FsCollectionName.CharacterTypes) {
-      this.characterTypes.loadData(this.afs, isReload)
-    }
+    Logger.trace(name)
+    this.collections[name].loadData(this.afs, isReload)
   }
 
   getCollection (name:FsCollectionName):FsCollection {
-    if (name === FsCollectionName.Abilities) {
-      return this.abilities
-    } else if (name === FsCollectionName.AbilityTypes) {
-      return this.abilityTypes
-    } else if (name === FsCollectionName.CharacterParamTypes) {
-      return this.characterParamTypes
-    } else if (name === FsCollectionName.CharacterTags) {
-      return this.characterTags
-    } else /* if (name === FsCollectionName.CharacterTypes) */ {
-      return this.characterTypes
-    }
+    Logger.trace(name)
+    return this.collections[name]
+  }
+
+  registerCallback (name: FsCollectionName, cbFn:()=> void) {
+    Logger.trace(name)
+    this.collections[name].registerCallback(cbFn)
   }
 }
