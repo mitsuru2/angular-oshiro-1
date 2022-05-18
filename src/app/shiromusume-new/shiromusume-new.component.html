@@ -1,9 +1,7 @@
 <p>shiromusume-new works!</p>
 
 <mat-divider></mat-divider>
-<h3>Abilities</h3>
-<div>Collection Status: {{abilitiesProp?.getStatus()}}</div>
-
+<h3>Abilities ({{abilitiesProp?.getStatus()}})</h3>
 <div *ngIf="abilitiesProp.getStatus() === 'Loaded'">
     <table rules="all">
         <tr><td>Key</td><td>Name</td><td>Type(ID)</td><td>Typd(name)</td></tr>
@@ -18,8 +16,7 @@
 
 
 <mat-divider></mat-divider>
-<h3>AbilityTypes</h3>
-<div>Collection Status: {{abilityTypesProp.getStatus()}}</div>
+<h3>AbilityTypes ({{abilityTypesProp.getStatus()}})</h3>
 <div *ngIf="abilityTypesProp.getStatus() === 'Loaded'">
     <table rules="all">
         <tr><td>Key</td><td>Name</td><td>Order</td></tr>
@@ -29,5 +26,51 @@
             <td>{{abilityTypesDoc[key].order}}</td>
         </tr>
     </table>
+</div>
 
+<mat-divider></mat-divider>
+<h3>Character Param Types ({{characterParamTypesProp.getStatus()}})</h3>
+<div *ngIf="characterParamTypesProp.getStatus() === 'Loaded'">
+    <table rules="all">
+        <tr><td>Key</td><td>Name.Normal</td><td>Name.Short</td><td>Order</td></tr>
+        <tr *ngFor="let key of characterParamTypesKeys">
+            <td>{{key}}</td>
+            <td>{{characterParamTypesDoc[key].name.normal}}</td>
+            <td>{{characterParamTypesDoc[key].name.short}}</td>
+            <td>{{characterParamTypesDoc[key].order}}</td>
+        </tr>
+    </table>
+</div>
+
+<mat-divider></mat-divider>
+<h3>Character Tags ({{characterTagsProp.getStatus()}})</h3>
+<div *ngIf="characterTagsProp.getStatus() === 'Loaded'">
+    <table rules="all">
+        <tr><td>Key</td><td>Name</td><td>Characters</td></tr>
+        <tr *ngFor="let key of characterTagsKeys">
+            <td>{{key}}</td>
+            <td>{{characterTagsDoc[key].name}}</td>
+            <td><span *ngFor="let c of characterTagsDoc[key].characters; index as i">
+                <span *ngIf="i > 0">, </span>
+                <span>{{c}}</span>
+            </span></td>
+        </tr>
+    </table>
+</div>
+
+<mat-divider></mat-divider>
+<h3>Character Types ({{characterTypesProp.getStatus()}})</h3>
+<div *ngIf="characterTypesProp.getStatus() === 'Loaded'">
+    <table rules="all">
+        <tr><td>Key</td><td>Code</td><td>Names</td><td>Num</td></tr>
+        <tr *ngFor="let key of characterTypesKeys">
+            <td>{{key}}</td>
+            <td>{{characterTypesDoc[key].code}}</td>
+            <td><span *ngFor="let v of characterTypesDoc[key].names; index as i">
+                <span *ngIf="i > 0"> >> </span>
+                <span>{{v}}</span>
+            </span></td>
+            <td>{{characterTypesDoc[key].num}}</td>
+        </tr>
+    </table>
 </div>

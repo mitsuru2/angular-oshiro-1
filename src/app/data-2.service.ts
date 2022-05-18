@@ -3,14 +3,19 @@
  */
 /** Core modules. */
 import { Injectable } from '@angular/core'
-
-/** Local modules. */
-import { FsAbilityAfs, FsAbilityDoc, FsAbilityTypeAfs, FsAbilityTypeDoc, FsCollectionName } from './oshiro-data-type'
-import { Logger } from './logger'
-import { FsCollectionWrapper, FsCollectionStatus } from './fs-collection-wrapper'
 import { AngularFirestore } from '@angular/fire/compat/firestore'
 
-type FsCollection = FsCollectionWrapper<FsAbilityAfs> | FsCollectionWrapper<FsAbilityTypeAfs>
+/** Local modules. */
+import { FsAbilityAfs, FsAbilityTypeAfs, FsCharacterParamTypeAfs, FsCharacterTagAfs, FsCharacterTypeAfs, FsCollectionName } from './oshiro-data-type'
+import { FsCollectionWrapper } from './fs-collection-wrapper'
+import { Logger } from './logger'
+
+type FsCollection =
+  | FsCollectionWrapper<FsAbilityAfs>
+  | FsCollectionWrapper<FsAbilityTypeAfs>
+  | FsCollectionWrapper<FsCharacterParamTypeAfs>
+  | FsCollectionWrapper<FsCharacterTagAfs>
+  | FsCollectionWrapper<FsCharacterTypeAfs>
 
 /**
  * Service class: Data2Service
@@ -19,29 +24,27 @@ type FsCollection = FsCollectionWrapper<FsAbilityAfs> | FsCollectionWrapper<FsAb
   providedIn: 'root'
 })
 export class Data2Service {
-  private dummyCollection = new FsCollectionWrapper<FsAbilityAfs>('Abilities')
-  private abilities = new FsCollectionWrapper<FsAbilityAfs>('Abilities')
-  private abilityTypes = new FsCollectionWrapper<FsAbilityTypeAfs>('AbilityTypes')
+  private abilities = new FsCollectionWrapper<FsAbilityAfs>(FsCollectionName.Abilities)
+  private abilityTypes = new FsCollectionWrapper<FsAbilityTypeAfs>(FsCollectionName.AbilityTypes)
+  private characterParamTypes = new FsCollectionWrapper<FsCharacterParamTypeAfs>(FsCollectionName.CharacterParamTypes)
+  private characterTags = new FsCollectionWrapper<FsCharacterTagAfs>(FsCollectionName.CharacterTags)
+  private characterTypes = new FsCollectionWrapper<FsCharacterTypeAfs>(FsCollectionName.CharacterTypes)
 
   constructor (private afs: AngularFirestore) {
     Logger.trace()
   }
 
-  loadData (name: FsCollectionName) {
+  loadData (name: FsCollectionName, isReload: boolean = false) {
     if (name === FsCollectionName.Abilities) {
-      this.abilities.loadData(this.afs)
+      this.abilities.loadData(this.afs, isReload)
     } else if (name === FsCollectionName.AbilityTypes) {
-      this.abilityTypes.loadData(this.afs)
-    }
-  }
-
-  getStatus (name: FsCollectionName): FsCollectionStatus {
-    if (name === FsCollectionName.Abilities) {
-      return this.abilities.getStatus()
-    } else if (name === FsCollectionName.AbilityTypes) {
-      return this.abilityTypes.getStatus()
-    } else {
-      return FsCollectionStatus.Undefined
+      this.abilityTypes.loadData(this.afs, isReload)
+    } else if (name === FsCollectionName.CharacterParamTypes) {
+      this.characterParamTypes.loadData(this.afs, isReload)
+    } else if (name === FsCollectionName.CharacterTags) {
+      this.characterTags.loadData(this.afs, isReload)
+    } else if (name === FsCollectionName.CharacterTypes) {
+      this.characterTypes.loadData(this.afs, isReload)
     }
   }
 
@@ -50,9 +53,12 @@ export class Data2Service {
       return this.abilities
     } else if (name === FsCollectionName.AbilityTypes) {
       return this.abilityTypes
-    } else {
-      Logger.error(`Unsupported Firesotre collection name: ${name}`)
-      return this.dummyCollection
+    } else if (name === FsCollectionName.CharacterParamTypes) {
+      return this.characterParamTypes
+    } else if (name === FsCollectionName.CharacterTags) {
+      return this.characterTags
+    } else /* if (name === FsCollectionName.CharacterTypes) */ {
+      return this.characterTypes
     }
   }
 }

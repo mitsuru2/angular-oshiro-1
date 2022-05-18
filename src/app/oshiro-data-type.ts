@@ -8,6 +8,7 @@ export const FsCollectionName = {
   AbilityTypes: 'AbilityTypes',
   CharacterParamTypes: 'CharacterParamTypes',
   CharacterTags: 'CharacterTags',
+  CharacterTypes: 'CharacterTypes',
   Characters: 'Characters',
   Facilities: 'Facilities',
   FacilityTypes: 'FacilityTypes',
@@ -17,51 +18,12 @@ export const FsCollectionName = {
   UserCharacterLists: 'UserCharacterLists',
   UserFacilityLists: 'UserFacilityLists',
   UserWeaponLists: 'UserWeaponLists',
+  Users: 'Users',
   VoiceActors: 'VoiceActors',
   WeaponTypes: 'WeaponTypes',
   Weapons: 'Weapons'
 } as const
-export type FsCollectionName = typeof FsCollectionName[keyof typeof FsCollectionName]
-
-export type TFsCollectionName =
-  | 'Abilities'
-  | 'AbilityTypes'
-  | 'CharacterParamTypes'
-  | 'CharacterTags'
-  | 'CharacterTypes'
-  | 'Characters'
-  | 'Facilities'
-  | 'FacilityTypes'
-  | 'GeographTypes'
-  | 'Illustrators'
-  | 'Regions'
-  | 'UserCharacterLists'
-  | 'UserFacilityLists'
-  | 'UserWeaponLists'
-  | 'Users'
-  | 'VoiceActors'
-  | 'WeaponTypes'
-  | 'Weapons';
-export namespace TFsCollectionName {
-  export const Abilities: TFsCollectionName = 'Abilities'
-  export const AbilityTypes: TFsCollectionName = 'AbilityTypes'
-  export const CharacterparamTypes: TFsCollectionName = 'CharacterParamTypes'
-  export const CharacterTags: TFsCollectionName = 'CharacterTags'
-  export const CharacterTypes: TFsCollectionName = 'CharacterTypes'
-  export const Characters: TFsCollectionName = 'Characters'
-  export const Facilities: TFsCollectionName = 'Facilities'
-  export const FacilityTypes: TFsCollectionName = 'FacilityTypes'
-  export const GeographTypes: TFsCollectionName = 'GeographTypes'
-  export const Illustrators: TFsCollectionName = 'Illustrators'
-  export const Regions: TFsCollectionName = 'Regions'
-  export const UserCharacterLists: TFsCollectionName = 'UserCharacterLists'
-  export const UserFacilityLists: TFsCollectionName = 'UserFacilityLists'
-  export const UserWeaponLists: TFsCollectionName = 'UserWeaponLists'
-  export const Users: TFsCollectionName = 'Users'
-  export const VoiceActors: TFsCollectionName = 'VoiceActors'
-  export const WeaponTypes: TFsCollectionName = 'WeaponTypes'
-  export const Weapons: TFsCollectionName = 'Weapons'
-}
+export type FsCollectionName = typeof FsCollectionName[keyof typeof FsCollectionName] // This line is same as 'export type FsCollectionName = Abilities | AbilityTypes | ...;'.
 
 /**
  * Data types for Firestore documents.
@@ -92,43 +54,43 @@ export type FsAbilityTypeDoc = {
 };
 
 /** Collection: CharacterParamTypes */
-type TCharacterParamTypeBase = {
+type FsCharacterParamTypeBase = {
   name: {
     normal: string;
     short: string;
   };
   order: number;
 };
-export type TCharacterParamTypeDocAfs = {
+export type FsCharacterParamTypeAfs = {
   id: string;
-} & TCharacterParamTypeBase;
-export type TCharacterParamTypeDocFs = {
-  [id: string]: TCharacterParamTypeBase;
+} & FsCharacterParamTypeBase;
+export type FsCharacterParamTypeDoc = {
+  [id: string]: FsCharacterParamTypeBase;
 };
 
 /** Collection: CharacterTags */
-type TCharacterTagBase = {
+type FsCharacterTagBase = {
   name: string;
   characters: string[];
 };
-export type TCharacterTagDocAfs = {
+export type FsCharacterTagAfs = {
   is: string;
-} & TCharacterTagBase;
-export type TCharacterTagDocFs = {
-  [id: string]: TCharacterTagBase;
+} & FsCharacterTagBase;
+export type FsCharacterTagDoc = {
+  [id: string]: FsCharacterTagBase;
 };
 
 /** Collection: CharacterTypes */
-type TCharacterTypeBase = {
+type FsCharacterTypeBase = {
   code: string;
   names: string[];
   num: number;
 };
-export type TCharacterTypeDocAfs = {
+export type FsCharacterTypeAfs = {
   id: string;
-} & TCharacterTypeBase;
-export type TCharacterTypeDocFs = {
-  [id: string]: TCharacterTypeBase;
+} & FsCharacterTypeBase;
+export type FsCharacterTypeDoc = {
+  [id: string]: FsCharacterTypeBase;
 };
 
 /** Collection: Characters */
@@ -306,6 +268,47 @@ export type TWeaponDocFs = {
 /**
  * Old version definitions.
  */
+
+export type TFsCollectionName =
+ | 'Abilities'
+ | 'AbilityTypes'
+ | 'CharacterParamTypes'
+ | 'CharacterTags'
+ | 'CharacterTypes'
+ | 'Characters'
+ | 'Facilities'
+ | 'FacilityTypes'
+ | 'GeographTypes'
+ | 'Illustrators'
+ | 'Regions'
+ | 'UserCharacterLists'
+ | 'UserFacilityLists'
+ | 'UserWeaponLists'
+ | 'Users'
+ | 'VoiceActors'
+ | 'WeaponTypes'
+ | 'Weapons';
+export namespace TFsCollectionName {
+ export const Abilities: TFsCollectionName = 'Abilities'
+ export const AbilityTypes: TFsCollectionName = 'AbilityTypes'
+ export const CharacterparamTypes: TFsCollectionName = 'CharacterParamTypes'
+ export const CharacterTags: TFsCollectionName = 'CharacterTags'
+ export const CharacterTypes: TFsCollectionName = 'CharacterTypes'
+ export const Characters: TFsCollectionName = 'Characters'
+ export const Facilities: TFsCollectionName = 'Facilities'
+ export const FacilityTypes: TFsCollectionName = 'FacilityTypes'
+ export const GeographTypes: TFsCollectionName = 'GeographTypes'
+ export const Illustrators: TFsCollectionName = 'Illustrators'
+ export const Regions: TFsCollectionName = 'Regions'
+ export const UserCharacterLists: TFsCollectionName = 'UserCharacterLists'
+ export const UserFacilityLists: TFsCollectionName = 'UserFacilityLists'
+ export const UserWeaponLists: TFsCollectionName = 'UserWeaponLists'
+ export const Users: TFsCollectionName = 'Users'
+ export const VoiceActors: TFsCollectionName = 'VoiceActors'
+ export const WeaponTypes: TFsCollectionName = 'WeaponTypes'
+ export const Weapons: TFsCollectionName = 'Weapons'
+}
+
 /**
  * Base data types (private)
  */

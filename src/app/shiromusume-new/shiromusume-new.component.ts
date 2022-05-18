@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Logger } from '../logger'
 import { Data2Service } from '../data-2.service'
-import { FsAbilityDoc, FsAbilityTypeDoc, FsCollectionName } from '../oshiro-data-type'
-import { FsCollectionStatus } from '../fs-collection-wrapper'
+import { FsAbilityDoc, FsAbilityTypeDoc, FsCharacterParamTypeDoc, FsCharacterTagDoc, FsCharacterTypeDoc, FsCollectionName } from '../oshiro-data-type'
 
 @Component({
   selector: 'app-shiromusume-new',
@@ -20,15 +19,23 @@ export class ShiromusumeNewComponent implements OnInit {
   abilityTypesProp = this.ds.getCollection(FsCollectionName.AbilityTypes)
   abilityTypesDoc = this.abilityTypesProp.getDocument() as FsAbilityTypeDoc
   abilityTypesKeys = this.abilityTypesProp.getKeys()
+  characterParamTypesProp = this.ds.getCollection(FsCollectionName.CharacterParamTypes)
+  characterParamTypesDoc = this.characterParamTypesProp.getDocument() as FsCharacterParamTypeDoc
+  characterParamTypesKeys = this.characterParamTypesProp.getKeys()
+  characterTagsProp = this.ds.getCollection(FsCollectionName.CharacterTags)
+  characterTagsDoc = this.characterTagsProp.getDocument() as FsCharacterTagDoc
+  characterTagsKeys = this.characterTagsProp.getKeys()
+  characterTypesProp = this.ds.getCollection(FsCollectionName.CharacterTypes)
+  characterTypesDoc = this.characterTypesProp.getDocument() as FsCharacterTypeDoc
+  characterTypesKeys = this.characterTypesProp.getKeys()
 
   ngOnInit (): void {
     Logger.trace()
 
-    if (this.abilitiesProp.getStatus() !== FsCollectionStatus.Loaded) {
-      this.ds.loadData(FsCollectionName.Abilities)
-    }
-    if (this.abilityTypesProp.getStatus() !== FsCollectionStatus.Loaded) {
-      this.ds.loadData(FsCollectionName.AbilityTypes)
-    }
+    this.ds.loadData(FsCollectionName.Abilities)
+    this.ds.loadData(FsCollectionName.AbilityTypes)
+    this.ds.loadData(FsCollectionName.CharacterParamTypes)
+    this.ds.loadData(FsCollectionName.CharacterTags)
+    this.ds.loadData(FsCollectionName.CharacterTypes)
   }
 }
